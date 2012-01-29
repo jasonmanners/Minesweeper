@@ -170,6 +170,7 @@ var Minesweeper = {
 
 	save : function() {
 		var jsonData = this.__mine_field.toJSON();
+		jsonData.size = this.size().NAME;
 		localStorage.setItem(CONST.SAVE_NAME,JSON.stringify(jsonData));
 	},
 
@@ -178,6 +179,9 @@ var Minesweeper = {
 
 		var jsonData = JSON.parse(localStorage.getItem(CONST.SAVE_NAME));
 		if(jsonData) {
+			console.log(CONST.SIZES[jsonData.size]);
+			this.size(CONST.SIZES[jsonData.size]);
+			this.resize();
 			this.__mine_field = new Minefield(this.__size);
 			this.__mine_field.fromJSON(jsonData);
 			this.__renderer.minefield(this.__mine_field);

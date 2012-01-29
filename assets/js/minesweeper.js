@@ -29,9 +29,9 @@ var CONST = {
 	},
 
 	SIZES : {
-		SMALL 	: {ROWS:  8, 	GRID_SIZE : 30, TEXT_SIZE : 18 },
-		MEDIUM 	: {ROWS: 16, 	GRID_SIZE : 25, TEXT_SIZE : 16 },
-		LARGE 	: {ROWS: 32, 	GRID_SIZE : 20, TEXT_SIZE : 14 }
+		SMALL 	: {ROWS:  8, 	GRID_SIZE : 30, TEXT_SIZE : 18, NAME : 'SMALL'  },
+		MEDIUM 	: {ROWS: 16, 	GRID_SIZE : 25, TEXT_SIZE : 16, NAME : 'MEDIUM' },
+		LARGE 	: {ROWS: 32, 	GRID_SIZE : 20, TEXT_SIZE : 14, NAME : 'LARGE'  }
 	},
 
 	TYPES : {
@@ -603,6 +603,7 @@ var Minesweeper = {
 
 	save : function() {
 		var jsonData = this.__mine_field.toJSON();
+		jsonData.size = this.size().NAME;
 		localStorage.setItem(CONST.SAVE_NAME,JSON.stringify(jsonData));
 	},
 
@@ -611,6 +612,9 @@ var Minesweeper = {
 
 		var jsonData = JSON.parse(localStorage.getItem(CONST.SAVE_NAME));
 		if(jsonData) {
+			console.log(CONST.SIZES[jsonData.size]);
+			this.size(CONST.SIZES[jsonData.size]);
+			this.resize();
 			this.__mine_field = new Minefield(this.__size);
 			this.__mine_field.fromJSON(jsonData);
 			this.__renderer.minefield(this.__mine_field);
