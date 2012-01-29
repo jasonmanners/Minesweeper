@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="assets/css/oogrid.css"/>
+		<link rel="stylesheet" href="assets/css/minesweeper.css"/>
+
+		<script src="assets/js/jquery-1.7.1.min.js"></script>
+		<script src="assets/js/minesweeper.js"></script>
+	</head>
+	<body>
+		<header><h1 id="title"><span class='blue'>mine</span><span class='green'>sweeper</span></h1></header>
+		<section id="container">
+			<article id="game_container">
+			</article>
+			<article id="ui">
+				<div class="line">
+					<div class="button size1of3 unit" id="small">Small</div>
+					<div class="button size1of3 unit" id="medium">Medium</div>
+					<div class="button size1of3 unit lastUnit" id="large">Large</div>
+				</div>
+				<div class="line">
+					<div class="button size1of3 unit" id="new">New Game</div>
+					<div class="button size1of3 unit" id="validate">Validate</div>
+					<div class="button size1of3 unit lastUnit" id="cheat">Cheat</div>
+				</div>
+				<div class="line">
+					<div class="button size1of3 unit" id="save">Save</div>
+					<div class="button size1of3 unit lastUnit" id="load">Load</div>
+					<!--<div class="button size1of3 unit lastUnit" id=""></div>-->
+				</div>
+			</article>
+		</section>
+
+
+		<!-- Win and Lose Overlays-->
+		<section class='overlay' id='win_overlay'>
+			<div class="boxclose" id="close_win">X</div>
+			<article class='game_msg'><h1 class='blue'>YOU WIN!</h1></article>
+		</section>
+
+		<section class='overlay' id='lose_overlay'>
+			<a class="boxclose" id="close_lose">X</a>
+			<article class='game_msg'>
+				<h1 class='green'>you lose</h1>
+				<p>You'll get 'em next time champ!</p>
+			</article>
+		</section>
+
+	</body>
+</html>
