@@ -60,7 +60,7 @@ var Minesweeper = {
 		});
 
 		$('#more_mines').click(function(){
-			if(that.__num_mines <= (that.__size.ROWS * that.__size.ROWS)) {
+			if(that.__num_mines < (that.__size.ROWS * that.__size.ROWS)-1) {
 				that.__num_mines++;
 			}
 			$('#mines').html(that.__num_mines);
