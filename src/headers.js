@@ -13,19 +13,29 @@ var requestAnimationFrame = window.requestAnimationFrame        ||
 var CONST = {
 	STYLES : {
 		MINE : {
-			'fillStyle' : '#FF2233',
+			COVERED : {
+				'fillStyle' : '#FFFFFF',
+			},
+			FLAGGED : {
+				'fillStyle' : '#FF9911',
+			},
+			UNCOVERED : {
+				'fillStyle' : '#FF2233',
+			}
 		},
-		COVERED : {
-			'fillStyle' : '#FFFFFF',
-		},
-		FLAGGED : {
-			'fillStyle' : '#FFFF22',
-		},
-		UNCOVERED : {
-			'fillStyle' : '#FFFFFF',
-			'font' : '18px Arial bold',
-			'textAlign' : 'center'
-		},
+		LAND : {
+			COVERED : {
+				'fillStyle' : '#FFFFFF',
+			},
+			FLAGGED : {
+				'fillStyle' : '#FFFF22',
+			},
+			UNCOVERED : {
+				'fillStyle' : '#FFFFFF',
+				'font' : '18px Arial bold',
+				'textAlign' : 'center'
+			},	
+		}
 	},
 
 	SIZES : {

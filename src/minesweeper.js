@@ -9,6 +9,7 @@ var Minesweeper = {
 	initialize : function() {
 		this.__mine_field = undefined;
 		this.__size = CONST.SIZES.SMALL;
+		this.__num_mines = CONST.DEFAULTS.NUM_MINES;
 		this.__mouse_state = CONST.STATES.INPUT.UNCOVERING;
 
 		this.initRenderer();
@@ -34,15 +35,15 @@ var Minesweeper = {
 		//Buttons
 		$('#small').click(function(){
 			Minesweeper.size(CONST.SIZES.SMALL);
-			Minesweeper.resize();
+			//Minesweeper.resize();
 		});
 		$('#medium').click(function(){
 			Minesweeper.size(CONST.SIZES.MEDIUM);
-			Minesweeper.resize();
+			//Minesweeper.resize();
 		});
 		$('#large').click(function(){
 			Minesweeper.size(CONST.SIZES.LARGE);
-			Minesweeper.resize();
+			//Minesweeper.resize();
 		});
 
 		$('#new').click(function(){
@@ -82,7 +83,7 @@ var Minesweeper = {
 	
 	initBoard : function() {
 		//Be sure to add in Num of mines later
-		this.__mine_field = new Minefield(this.__size);
+		this.__mine_field = new Minefield(this.__size),this.__num_mines;
 		this.__renderer.minefield(this.__mine_field);
 	},
 
@@ -165,6 +166,7 @@ var Minesweeper = {
 
 	newGame : function() {
 		Minesweeper.initBoard();
+		Minesweeper.resize();
 		Minesweeper.start();
 	},
 
@@ -175,11 +177,9 @@ var Minesweeper = {
 	},
 
 	load : function() {
-		this.stop();
-
 		var jsonData = JSON.parse(localStorage.getItem(CONST.SAVE_NAME));
 		if(jsonData) {
-			console.log(CONST.SIZES[jsonData.size]);
+			this.stop();
 			this.size(CONST.SIZES[jsonData.size]);
 			this.resize();
 			this.__mine_field = new Minefield(this.__size);

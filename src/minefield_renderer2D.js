@@ -17,7 +17,7 @@ MinefieldRenderer2D.prototype = {
 		this.__ctx.beginDraw();
 		//Draw Hidden Elements
 		$.each(this.__mine_field.hidden(),function(ind,val){
-			var options = CONST.STYLES[val.state()]
+			var options = CONST.STYLES[val.type()][val.state()]
 			var size = that.__mine_field.__grid_size;
 			var x = val.x() * size + 2;
 			var y = val.y() * size + 2;
@@ -27,14 +27,14 @@ MinefieldRenderer2D.prototype = {
 		//Draw discovered elements
 		$.each(this.__mine_field.discovered(),function(ind,val){
 			if(val.type() == CONST.TYPES.MINE) {
-				var options = CONST.STYLES.MINE;
+				var options = CONST.STYLES.MINE.UNCOVERED;
 				var size = that.__mine_field.__grid_size;
 				var x = val.x() * size + 2;
 				var y = val.y() * size + 2;
 				that.__ctx.rect(x,y,size-4,size-4,options);
 			}
 			else {
-				var options = CONST.STYLES.UNCOVERED;
+				var options = CONST.STYLES.LAND.UNCOVERED;
 				var size = that.__mine_field.__grid_size;
 				var x = val.x() * size + (size / 2);
 				var y = val.y() * size + (size / 2)+4;

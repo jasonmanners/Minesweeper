@@ -66,22 +66,77 @@ Minefield.prototype = {
 		return Math.floor(Math.random()*this.__field_size);
 	},
 
+
+
+	/*
+
+
+	new discover
+
+	if mine
+		reveal and return true
+	if count = 0
+		reveal all neighbors that have 0
+	else
+		reveal self
+
+	return false;
+	*/
+
 	//When cell is uncovered remove from the hidden array
 	// and add it to the discovered array
 	discover : function(c_x,c_y) {
 		var e_cell = this.__field[c_y][c_x];
-		var e_ind = this.__hidden.indexOf(e_cell);
+		var e_type = e_cell.type();
 		var is_mine = false;
-		if(e_ind > -1) {
-			e_cell.state(CONST.STATES.UNCOVERED);
-			this.__hidden.splice(e_ind,1);
-			this.__discovered.push(e_cell);	
-			if(e_cell.type() == CONST.TYPES.MINE) {
-				is_mine = true;
-			}
+		if(e_cell.isMine()) {
+			this.__reveal(e_cell);
+			is_mine = true;
+		}
+		else if(e_cell.count() == 0) {
+			this.__reveal(e_cell);
+			this.__revealNeighbors(e_cell);
+		}
+		else {
+			this.__reveal(e_cell);
 		}
 
 		return is_mine;
+	},
+
+	__reveal : function(e_cell) {
+		var e_ind = this.__hidden.indexOf(e_cell);
+		if(e_ind > -1) {
+			e_cell.state(CONST.STATES.UNCOVERED);
+			this.__hidden.splice(e_ind,1);
+			this.__discovered.push(e_cell);
+		}
+	},
+
+	__revealNeighbors : function(cell,inds) {
+		var that = this;
+		var x = cell.x();
+		var y = cell.y();
+
+		var neighbors = [
+								[x,y-1], 
+				[x-1,y],				[x+1,y],
+								[x,y+1], 
+			];
+
+		$.each(neighbors,function(ind,val){
+			var i_x = val[0];
+			var i_y = val[1];
+			if(	i_x >= 0 && i_x < that.__field_size &&
+					i_y >= 0 && i_y < that.__field_size) {
+				var e_cell = that.__field[i_y][i_x];
+				if(e_cell.count() == 0 && e_cell.state() != CONST.STATES.UNCOVERED) {
+					that.__reveal(e_cell);	
+					that.__revealNeighbors(e_cell);
+				}
+			}
+		});
+	
 	},
 
 	clearArrays : function() {
@@ -112,7 +167,7 @@ Minefield.prototype = {
 	},
 
 	flagCell : function(c_x,c_y) {
-		this.__field[c_y][c_x].flag();
+		this.__field[c_y][c_x].toggleFlag();
 	},
 
 	hidden : function() {
@@ -154,7 +209,6 @@ Minefield.prototype = {
 			//build hidden
 			if(val.state == CONST.STATES.COVERED ||
 					val.state == CONST.STATES.FLAGGED) {
-				console.log(x+":"+y);
 				that.__hidden.push(n_cell);
 			}
 			//build discovered

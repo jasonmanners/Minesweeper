@@ -49,6 +49,23 @@ Cell.prototype = {
 	flag : function() {
 		this.state(CONST.STATES.FLAGGED);
 	},
+	
+	toggleFlag : function() {
+		if(this.state() == CONST.STATES.COVERED) {
+			this.state(CONST.STATES.FLAGGED);	
+		}
+		else {
+			this.state(CONST.STATES.COVERED);		
+		}
+	},
+
+	isMine : function() {
+		var result = false;
+		if(this.type() == CONST.TYPES.MINE) {
+			result = true;
+		}
+		return result;
+	},
 
 	toJSON : function() {
 		var result = {};
