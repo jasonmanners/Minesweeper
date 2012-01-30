@@ -101,7 +101,19 @@ var Minesweeper = {
 		});	
 
 		//Mouse Events
-		$(this.__canvas.el()).bind('mousedown', Minesweeper.mouseDown.bind(this));
+		$(this.__canvas.el()).bind('mousedown', function(e) {
+			var x = e.pageX - this.offsetLeft;
+			var y = e.pageY - this.offsetTop;
+			var c_x = Math.floor(x / that.__size.GRID_SIZE);
+			var c_y = Math.floor(y / that.__size.GRID_SIZE);
+
+			if(that.__mouse_state == CONST.STATES.INPUT.UNCOVERING) {
+				that.uncoverCell(c_x,c_y);
+			}
+			else {
+				that.flagCell(c_x,c_y);
+			}
+		});
 
 		//Keyboard Events
 		$(document).keydown(this.keyDown.bind(this));
@@ -122,14 +134,7 @@ var Minesweeper = {
 
 	//Event Functions
 	mouseDown : function(e) {
-		var c_x = Math.floor(e.offsetX / this.__size.GRID_SIZE);
-		var c_y = Math.floor(e.offsetY / this.__size.GRID_SIZE);
-		if(this.__mouse_state == CONST.STATES.INPUT.UNCOVERING) {
-			this.uncoverCell(c_x,c_y);
-		}
-		else {
-			this.flagCell(c_x,c_y);
-		}
+		//Moved to within declaration due to browser comp
 	},
 
 	keyDown : function(e) {
