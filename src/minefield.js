@@ -66,23 +66,6 @@ Minefield.prototype = {
 		return Math.floor(Math.random()*this.__field_size);
 	},
 
-
-
-	/*
-
-
-	new discover
-
-	if mine
-		reveal and return true
-	if count = 0
-		reveal all neighbors that have 0
-	else
-		reveal self
-
-	return false;
-	*/
-
 	//When cell is uncovered remove from the hidden array
 	// and add it to the discovered array
 	discover : function(c_x,c_y) {
@@ -118,6 +101,7 @@ Minefield.prototype = {
 		var x = cell.x();
 		var y = cell.y();
 
+		//Only want to reveal direct paths, diagnols don't count
 		var neighbors = [
 								[x,y-1], 
 				[x-1,y],				[x+1,y],
@@ -213,7 +197,6 @@ Minefield.prototype = {
 			}
 			//build discovered
 			else {
-				console.log("U - "+x+":"+y);
 				that.__discovered.push(n_cell);	
 			}
 			

@@ -8,34 +8,14 @@ header {
 	text-align: center;
 }
 
-#title {
-	text-transform: uppercase;
-	font-size: 75px;
-	font-weight: bold;
-	margin: 0 auto;
-	color: #FFF;
-}
-
-#container {
-	margin: 0 auto;
-	width : 960px;
-}
-
-#game_container {
-	margin: 50px auto;
-}
-
-#ui {
-	margin: 0 auto;
-	width:450px;
-}
-
 canvas {
 	border: 4px solid #FFFFFF;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 }
+
+
 
 .button {
 	border: 2px solid #FFFFFF;
@@ -125,11 +105,57 @@ canvas {
 		background: #3C7;
 	}
 
-	.sizes {
-		
-	}
+.selected {
+	background: rgba(85,136,238,0.8);
+	color: #FFFFFF;
+}
 
-	.selected {
-		background: rgba(85,136,238,0.8);
-		color: #FFFFFF;
-	}
+.mines {
+	border: 2px solid #FFFFFF;
+	text-align:center;
+	font-weight: bold;
+	color: #333333;
+	background: #999999;
+	padding: 10px 0;
+}
+
+.info {
+	color: #FFFFFF;
+}
+
+
+#title {
+	text-transform: uppercase;
+	font-size: 75px;
+	font-weight: bold;
+	margin: 0 auto;
+	color: #FFF;
+}
+
+#container {
+	margin: 0 auto;
+	width : 960px;
+}
+
+#game_container {
+	margin: 50px auto;
+}
+
+#ui {
+	margin: 0 auto;
+	width:450px;
+}
+	
+#possible_save {
+	text-align: center;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+	
+#signature {
+	position: fixed;
+	bottom : 5px;
+	right: 5px;
+	color: #FFFFFF;
+	text-shadow: 1px 1px #58E,2px 2px #58E,3px 3px #58E;
+}

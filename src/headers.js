@@ -17,7 +17,8 @@ var CONST = {
 				'fillStyle' : '#FFFFFF',
 			},
 			FLAGGED : {
-				'fillStyle' : '#FF9911',
+				//'fillStyle' : '#FF9911',
+				'fillStyle' : '#FFFF22',
 			},
 			UNCOVERED : {
 				'fillStyle' : '#FF2233',

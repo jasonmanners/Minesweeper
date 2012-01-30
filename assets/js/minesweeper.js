@@ -17,7 +17,8 @@ var CONST = {
 				'fillStyle' : '#FFFFFF',
 			},
 			FLAGGED : {
-				'fillStyle' : '#FF9911',
+				//'fillStyle' : '#FF9911',
+				'fillStyle' : '#FFFF22',
 			},
 			UNCOVERED : {
 				'fillStyle' : '#FF2233',
@@ -294,23 +295,6 @@ Minefield.prototype = {
 		return Math.floor(Math.random()*this.__field_size);
 	},
 
-
-
-	/*
-
-
-	new discover
-
-	if mine
-		reveal and return true
-	if count = 0
-		reveal all neighbors that have 0
-	else
-		reveal self
-
-	return false;
-	*/
-
 	//When cell is uncovered remove from the hidden array
 	// and add it to the discovered array
 	discover : function(c_x,c_y) {
@@ -346,6 +330,7 @@ Minefield.prototype = {
 		var x = cell.x();
 		var y = cell.y();
 
+		//Only want to reveal direct paths, diagnols don't count
 		var neighbors = [
 								[x,y-1], 
 				[x-1,y],				[x+1,y],
@@ -441,7 +426,6 @@ Minefield.prototype = {
 			}
 			//build discovered
 			else {
-				console.log("U - "+x+":"+y);
 				that.__discovered.push(n_cell);	
 			}
 			
@@ -526,9 +510,13 @@ var Minesweeper = {
 		this.__num_mines = CONST.DEFAULTS.NUM_MINES;
 		this.__mouse_state = CONST.STATES.INPUT.UNCOVERING;
 		this.__selected_size_el = $('#small');
-		console.log(this.__selected_size_el);
 		this.initRenderer();
 		this.initEvents();
+
+		var savedGame = localStorage.getItem(CONST.SAVE_NAME);
+		if(savedGame) {
+			$('#possible_save').html('You have saved a game');
+		}
 	},
 
 	initRenderer : function() {
@@ -555,21 +543,32 @@ var Minesweeper = {
 			that.__selected_size_el.removeClass('selected');
 			that.__selected_size_el = $('#small');
 			that.__selected_size_el.addClass('selected');
-			//Minesweeper.resize();
 		});
 		$('#medium').click(function(){
 			Minesweeper.size(CONST.SIZES.MEDIUM);
 			that.__selected_size_el.removeClass('selected');
 			that.__selected_size_el = $('#medium');
 			that.__selected_size_el.addClass('selected');
-			//Minesweeper.resize();
 		});
 		$('#large').click(function(){
 			Minesweeper.size(CONST.SIZES.LARGE);
 			that.__selected_size_el.removeClass('selected');
 			that.__selected_size_el = $('#large');
 			that.__selected_size_el.addClass('selected');
-			//Minesweeper.resize();
+		});
+
+		$('#more_mines').click(function(){
+			if(that.__num_mines <= (that.__size.ROWS * that.__size.ROWS)) {
+				that.__num_mines++;
+			}
+			$('#mines').html(that.__num_mines);
+		});
+
+		$('#less_mines').click(function(){
+			if(that.__num_mines > 10) {
+				that.__num_mines--;
+			}
+			$('#mines').html(that.__num_mines);
 		});
 
 		$('#new').click(function(){
@@ -609,7 +608,7 @@ var Minesweeper = {
 	
 	initBoard : function() {
 		//Be sure to add in Num of mines later
-		this.__mine_field = new Minefield(this.__size),this.__num_mines;
+		this.__mine_field = new Minefield(this.__size,this.__num_mines);
 		this.__renderer.minefield(this.__mine_field);
 	},
 
@@ -700,6 +699,7 @@ var Minesweeper = {
 		var jsonData = this.__mine_field.toJSON();
 		jsonData.size = this.size().NAME;
 		localStorage.setItem(CONST.SAVE_NAME,JSON.stringify(jsonData));
+		$('#possible_save').html('You have saved a game');
 	},
 
 	load : function() {
@@ -713,6 +713,7 @@ var Minesweeper = {
 			this.__renderer.minefield(this.__mine_field);
 			this.start();
 			localStorage.removeItem(CONST.SAVE_NAME);	
+			$('#possible_save').html('&nbsp;');
 		}
 	},
 
