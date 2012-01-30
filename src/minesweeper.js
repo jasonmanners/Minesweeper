@@ -11,7 +11,8 @@ var Minesweeper = {
 		this.__size = CONST.SIZES.SMALL;
 		this.__num_mines = CONST.DEFAULTS.NUM_MINES;
 		this.__mouse_state = CONST.STATES.INPUT.UNCOVERING;
-
+		this.__selected_size_el = $('#small');
+		console.log(this.__selected_size_el);
 		this.initRenderer();
 		this.initEvents();
 	},
@@ -31,18 +32,29 @@ var Minesweeper = {
 	},
 
 	initEvents : function() {
+		var that = this;
 		//May want to set the click on the parent and based on src element do what is needed
 		//Buttons
+
 		$('#small').click(function(){
 			Minesweeper.size(CONST.SIZES.SMALL);
+			that.__selected_size_el.removeClass('selected');
+			that.__selected_size_el = $('#small');
+			that.__selected_size_el.addClass('selected');
 			//Minesweeper.resize();
 		});
 		$('#medium').click(function(){
 			Minesweeper.size(CONST.SIZES.MEDIUM);
+			that.__selected_size_el.removeClass('selected');
+			that.__selected_size_el = $('#medium');
+			that.__selected_size_el.addClass('selected');
 			//Minesweeper.resize();
 		});
 		$('#large').click(function(){
 			Minesweeper.size(CONST.SIZES.LARGE);
+			that.__selected_size_el.removeClass('selected');
+			that.__selected_size_el = $('#large');
+			that.__selected_size_el.addClass('selected');
 			//Minesweeper.resize();
 		});
 

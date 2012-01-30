@@ -124,3 +124,12 @@ canvas {
 		cursor: pointer;
 		background: #3C7;
 	}
+
+	.sizes {
+		
+	}
+
+	.selected {
+		background: rgba(85,136,238,0.8);
+		color: #FFFFFF;
+	}
